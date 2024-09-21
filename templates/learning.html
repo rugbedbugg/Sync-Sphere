@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}YouTube Catalogue{% endblock %}
+
+{% block styles %}
+<style>
+    .catalogue-container {
+        padding: 50px;
+    }
+
+    .video-card {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        padding: 15px;
+        border: 1px solid #e3e3e3;
+        border-radius: 10px;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .video-card:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .video-thumbnail {
+        max-width: 150px;
+        max-height: 100px;
+        margin-right: 20px;
+        border-radius: 10px;
+    }
+
+    .video-info h5 {
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .video-info p {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .video-info a {
+        text-decoration: none;
+        color: #5c67f5;
+        font-weight: 600;
+    }
+
+    .video-info a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="catalogue-container">
+    <h2 class="text-center">YouTube Video Catalogue</h2>
+    <hr>
+
+    <!-- Video Cards -->
+    <div class="video-card">
+        <img class="video-thumbnail" src="https://img.youtube.com/vi/VIDEO_ID_1/0.jpg" alt="Video 1">
+        <div class="video-info">
+            <h5>Video Title 1</h5>
+            <p>Short description or introduction about Video 1.</p>
+            <a href="{{ url_for('watch_video', video_id='VIDEO_ID_1') }}">Watch Video</a>
+        </div>
+    </div>
+
+    <div class="video-card">
+        <img class="video-thumbnail" src="https://img.youtube.com/vi/VIDEO_ID_2/0.jpg" alt="Video 2">
+        <div class="video-info">
+            <h5>Video Title 2</h5>
+            <p>Short description or introduction about Video 2.</p>
+            <a href="{{ url_for('watch_video', video_id='VIDEO_ID_2') }}">Watch Video</a>
+        </div>
+    </div>
+
+    <!-- Add more videos in similar structure -->
+
+</div>
+{% endblock %}

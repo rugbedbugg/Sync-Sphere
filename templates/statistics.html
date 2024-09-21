@@ -1,0 +1,84 @@
+<head>
+
+{% extends "base.html" %}
+
+{% block title %}Study Statistics{% endblock %}
+
+{% block styles %}
+
+<style>
+    .statistics-container {
+        padding: 50px;
+        text-align: center;
+    }
+
+    #studyChart {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="statistics-container">
+    <h2>Study Time This Week</h2>
+    <p>Check how much you've studied over the last 7 days.</p>
+
+    <!-- Bar chart for study hours -->
+    <canvas id="studyChart"></canvas>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Chart.js CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const studyData = { study_hours , safe };  // Passed from Flask as a JSON object
+
+    const ctx = document.getElementById('studyChart').getContext('2d');
+    const studyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            datasets: [{
+                label: 'Hours Studied',
+                data: studyData,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)',
+                    'rgba(255, 99, 71, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 71, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Hours'
+                    }
+                }
+            },
+            responsive: true,
+            maintainAspectRatio: false
+        }
+    });
+</script>
+{% endblock %}
+</head>

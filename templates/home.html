@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block styles %}
+<style>
+    /* Main container for icons */
+    .icons-container {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+    }
+
+    /* Style for the individual icon links */
+    .icon {
+        text-align: center;
+        margin: 0 30px;
+    }
+
+    .icon img {
+        width: 100px;
+        height: 100px;
+    }
+
+    /* Study Timer Styles */
+    .timer-container {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px;
+        background-color: #f5f5f5;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .timer-container h5 {
+        font-weight: 600;
+    }
+
+    .timer-buttons button {
+        margin-top: 10px;
+        padding: 8px 12px;
+        border: none;
+        background-color: #5c67f5;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    /* Date and Time Display */
+    .datetime-container {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: #f5f5f5;
+        padding: 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .datetime-container h5 {
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    /* Quote of the Day */
+    .quote-container {
+        text-align: center;
+        margin-top: 50px;
+        font-style: italic;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Study Timer -->
+<div class="timer-container">
+    <h5>Pomodoro Timer</h5>
+    <p id="timer">25:00</p>
+    <div class="timer-buttons">
+        <button onclick="startTimer()">Start</button>
+        <button onclick="resetTimer()">Reset</button>
+    </div>
+</div>
+
+<!-- Date and Time Display -->
+<div class="datetime-container">
+    <h5>Date & Time</h5>
+    <p id="datetime"></p>
+</div>
+
+<!-- Icons for Navigation -->
+<div class="icons-container">
+    <div class="icon">
+        <a href="{{ url_for('image_to_pdf') }}">
+            <img src="{{ url_for('static', filename='icons/image_to_pdf.png') }}" alt="Image to PDF">
+            <p>Image to PDF</p>
+        </a>
+    </div>
+    <div class="icon">
+        <a href="{{ url_for('statistics') }}">
+            <img src="{{ url_for('static', filename='icons/statistics.png') }}" alt="Statistics">
+            <p>Statistics</p>
+        </a>
+    </div>
+    <div class="icon">
+        <a href="{{ url_for('youtube_catalogue') }}">
+            <img src="{{ url_for('static', filename='icons/youtube_catalogue.png') }}" alt="YouTube Catalogue">
+            <p>YouTube Catalogue</p>
+        </a>
+    </div>
+</div>
+
+<!-- Quote of the Day -->
+<div class="quote-container">
+    <p id="quote"></p>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Timer Variables
+    let timeLeft = 1500; // Default 25 mins
+    let timer;
+
+    // Start the timer
+    function startTimer() {
+        if (!timer) {
+            timer = setInterval(function () {
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    timer = null;
+                    alert("Time's up!");
+                } else {
+                    timeLeft--;
+                    displayTime();
+                }
+            }, 1000);
+        }
+    }
+
+    // Reset the timer
+    function resetTimer() {
+        clearInterval(timer);
+        timer = null;
+        timeLeft = 1500; // Reset to 25 mins
+        displayTime();
+    }
+
+    // Display formatted time
+    function displayTime() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.getElementById('timer').textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
+
+    // Update Date and Time
+    function updateDateTime() {
+        const now = new Date();
+        const dateString = now.toLocaleDateString();
+        const timeString = now.toLocaleTimeString();
+        document.getElementById('datetime').textContent = `${dateString} - ${timeString}`;
+    }
+    setInterval(updateDateTime, 1000); // Update every second
+
+    // Quote of the Day (fetch or random quote generator)
+    const quotes = [
+        "Success is not final; failure is not fatal: It is the courage to continue that counts.",
+        "Believe you can and you're halfway there.",
+        "The only limit to our realization of tomorrow is our doubts of today.",
+        "Act as if what you do makes a difference. It does."
+    ];
+    const dailyQuote = quotes[new Date().getDate() % quotes.length];
+    document.getElementById('quote').textContent = dailyQuote;
+</script>
+{% endblock %}

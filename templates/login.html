@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %} Login {% endblock %}
+
+{% block styles %} 
+<style>
+    body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f7f9fc;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f9fc;
+}
+
+.login-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-box h1 {
+    font-weight: 600;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.login-box form .form-control {
+    margin-bottom: 20px;
+    border-radius: 50px;
+    padding: 15px;
+}
+
+.login-box button {
+    border-radius: 50px;
+    padding: 10px 20px;
+    width: 100%;
+    background-color: #5c67f5;
+    border: none;
+    color: white;
+    font-weight: 600;
+}
+
+.login-box button:hover {
+    background-color: #424de4;
+}
+
+.text-muted {
+    font-size: 14px;
+    margin-top: 15px;
+    text-align: center;
+}
+
+.text-muted a {
+    color: #5c67f5;
+    text-decoration: none;
+}
+
+.text-muted a:hover {
+    text-decoration: underline;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="login-box">
+        <h1>Login</h1>
+        <form action="{{ url_for('login') }}" method="POST">
+            <input type="text" class="form-control" name="username" placeholder="Username" required>
+            <input type="password" class="form-control" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p class="text-muted">Don't have an account? <a href="#">Sign up</a></p>
+    </div>
+</div>
+{% endblock %}
+
